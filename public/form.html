@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Barang Hilang</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 450px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .form-container h2 {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            border-radius: 12px 12px 0 0;
+            font-size: 1.8em;
+            margin: -20px -20px 20px -20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-container h2 i {
+            font-size: 1.2em;
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-container label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="file"],
+        .form-container textarea {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-container input[type="text"]:focus,
+        .form-container input[type="file"]:focus,
+        .form-container textarea:focus {
+            border-color: #6a11cb;
+        }
+
+        .form-container textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-container button {
+            padding: 12px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background: linear-gradient(to right, #5a0fbf, #1d6ce0);
+        }
+
+        .form-container button i {
+            font-size: 1.2em;
+        }
+
+        /* Responsif */
+        @media (max-width: 500px) {
+            .form-container {
+                width: 95%;
+            }
+
+            .form-container h2 {
+                font-size: 1.4em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2><i class="fas fa-file-alt"></i> Formulir Barang Hilang</h2>
+        <form id="lost-item-form" enctype="multipart/form-data">
+            <label for="name">Nama Anda:</label>
+            <input type="text" id="name" name="name" placeholder="Masukkan nama Anda" required>
+
+            <label for="contact">Kontak (Email/No HP):</label>
+            <input type="text" id="contact" name="contact" placeholder="Masukkan kontak Anda" required>
+
+            <label for="location">Lokasi Barang Hilang:</label>
+            <input type="text" id="location" name="location" placeholder="Masukkan lokasi barang hilang" required>
+
+            <label for="description">Deskripsi Barang:</label>
+            <textarea id="description" name="description" placeholder="Deskripsikan barang yang hilang" rows="4" required></textarea>
+
+            <label for="image">Gambar Barang:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+
+            <button type="submit">
+                <i class="fas fa-paper-plane"></i> Kirim
+            </button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('lost-item-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData();
+            formData.append('name', document.getElementById('name').value);
+            formData.append('contact', document.getElementById('contact').value);
+            formData.append('location', document.getElementById('location').value);
+            formData.append('description', document.getElementById('description').value);
+            formData.append('image', document.getElementById('image').files[0]);
+
+            const response = await fetch('/api/lost-items/add', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const result = await response.json();
+            alert(result.message); // Pesan dari server
+
+            // Tidak mengarahkan ke halaman lain, hanya menampilkan pesan konfirmasi
+            if (response.ok) {
+                alert('Formulir berhasil dikirim!'); // Tampilkan pesan sukses
+            } else {
+                alert('Terjadi kesalahan, silakan coba lagi.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Chatbot Pencari Barang</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="chatbot-container">
+        <h2><i class="fas fa-robot"></i> Chatbot Pencari Barang</h2>
+        <div class="chat-window">
+            <div id="chat-log" class="chat-log">
+                <p class="bot-message">👋 Halo! Saya di sini untuk membantu menemukan barang Anda.</p>
+                <p class="bot-message">📝 Apa jenis barang yang hilang? (Contoh: dompet, ponsel, kunci)</p>
+            </div>
+            <div class="input-area">
+                <input type="text" id="user-input" placeholder="Ketik jawaban Anda di sini..." onkeydown="handleEnter(event)">
+                <button onclick="handleChat()">
+                    <i class="fas fa-paper-plane"></i> Kirim
+                </button>
+                <button onclick="sendLocation()">
+                    <i class="fas fa-map-marker-alt"></i> Kirim Lokasi
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="chatbot.js"></script>
+</body>
+</html>
